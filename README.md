@@ -1,7 +1,7 @@
 # sdk
 
-[![Build Status](https://travis-ci.org/janis-commerce/sdk.svg?branch=master)](https://travis-ci.org/janis-commerce/sdk)
-[![Coverage Status](https://coveralls.io/repos/github/janis-commerce/sdk/badge.svg?branch=master)](https://coveralls.io/github/janis-commerce/sdk?branch=master)
+[![Build Status](https://github.com/janis-commerce/sdk/workflows/Build%20Status/badge.svg)](https://github.com/janis-commerce/sdk/actions?query=workflow%3A%22Build+Status%22)
+[![Coverage Status](https://github.com/janis-commerce/sdk/workflows/Coverage%20Status/badge.svg)](https://github.com/janis-commerce/sdk/actions?query=workflow%3A%22Coverage+Status%22)
 [![npm version](https://badge.fury.io/js/%40janiscommerce%2Fsdk.svg)](https://www.npmjs.com/package/@janiscommerce/sdk)
 
 An SDK to interact with Janis easily
@@ -16,7 +16,7 @@ npm install @janiscommerce/sdk
 
 ## Usage
 ```js
-const Sdk = require('@janiscommerce/sdk');
+const JanisSDK = require('@janiscommerce/sdk');
 
 ```
 
