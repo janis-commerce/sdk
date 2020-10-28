@@ -31,5 +31,10 @@
   ],
   "directories": {
     "test": "tests"
+  },
+  "dependencies": {
+    "@janiscommerce/jwt": "^1.0.0",
+    "crypto-js": "^4.0.0",
+    "isomorphic-fetch": "^3.0.0"
   }
 }

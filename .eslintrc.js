@@ -13,6 +13,10 @@ module.exports = {
 		sourceType: 'script'
 	},
 
+	globals: {
+		fetch: 'readonly'
+	},
+
 	rules: {
 		'operator-linebreak': 0,
 		'no-continue': 0,
