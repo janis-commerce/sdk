@@ -16,6 +16,15 @@ module.exports.tokensData = {
 	refresh_token: 'the-refresh-token'
 };
 
+module.exports.tokensDataParsed = {
+	tokenType: 'Bearer',
+	expiresIn: 172799,
+	scope: 'openid profile email offline_access',
+	accessToken: 'the-access-token',
+	idToken: 'the-id-token',
+	refreshToken: 'the-refresh-token'
+};
+
 module.exports.deleteProp = (object, prop) => {
 	const { [prop]: propToRemove, ...newObject } = object;
 	return newObject;

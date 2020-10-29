@@ -82,12 +82,12 @@ const {
 	codeVerifier: codeVerifier
 });
 
-const userData = await authClient.decodeIdToken(idToken);
+const userData = await authClient.decodeIdToken(id_token);
 
 console.log(`Hello ${userData.name}!`);
 
 // refreshTokens() response has the same structure than getTokens()
-const newTokens = await authClient.refreshTokens(refreshTokens);
+const newTokens = await authClient.refreshTokens(refresh_tokens);
 ```
 
 The `Auth` by default uses Janis Production endpoints. But if you need to test against the QA environment, or even if you want to use it against a custom Authorization server (for example, Google's), you can pass an extra argument to each method:

@@ -3,7 +3,7 @@
 const assert = require('assert').strict;
 const sinon = require('sinon');
 
-const { validConfig, tokensData, deleteProp } = require('../utils');
+const { validConfig, tokensData, tokensDataParsed, deleteProp } = require('../utils');
 
 const { Auth } = require('../../lib');
 
@@ -36,9 +36,19 @@ describe('Auth', () => {
 			await assert.rejects(() => auth.getTokens(deleteProp(authorizationData, 'code')));
 		});
 
-		it('Should reject if codeVerifier is not provided', async () => {
+		it('Should reject if code is not provided', async () => {
 			const auth = new Auth(validConfig);
-			await assert.rejects(() => auth.getTokens(deleteProp(authorizationData, 'codeVerifier')));
+			await assert.rejects(() => auth.getTokens({
+				...authorizationData,
+				code: ['invalid']
+			}));
+		});
+
+		it('Should reject if codeVerifier is not a string', async () => {
+			const auth = new Auth(validConfig);
+			await assert.rejects(() => auth.getTokens({
+				codeVerifier: ['invalid']
+			}));
 		});
 
 		it('Should reject if fetch fails', async () => {
@@ -98,7 +108,7 @@ describe('Auth', () => {
 			const auth = new Auth(validConfig);
 			const tokens = await auth.getTokens(authorizationData);
 
-			assert.deepEqual(tokens, tokensData);
+			assert.deepEqual(tokens, tokensDataParsed);
 
 			sinon.assert.calledOnceWithExactly(global.fetch, 'https://id.janis.in/api/oauth/2.0/token', {
 				method: 'POST',
@@ -125,7 +135,7 @@ describe('Auth', () => {
 			const auth = new Auth(validConfig);
 			const tokens = await auth.getTokens(authorizationData, 'https://example.com/token');
 
-			assert.deepEqual(tokens, tokensData);
+			assert.deepEqual(tokens, tokensDataParsed);
 
 			sinon.assert.calledOnceWithExactly(global.fetch, 'https://example.com/token', {
 				method: 'POST',

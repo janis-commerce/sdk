@@ -3,7 +3,7 @@
 const assert = require('assert').strict;
 const sinon = require('sinon');
 
-const { validConfig, tokensData } = require('../utils');
+const { validConfig, tokensData, tokensDataParsed } = require('../utils');
 
 const { Auth } = require('../../lib');
 
@@ -93,7 +93,7 @@ describe('Auth', () => {
 			const auth = new Auth(validConfig);
 			const tokens = await auth.refreshTokens('the-refresh-token');
 
-			assert.deepEqual(tokens, tokensData);
+			assert.deepEqual(tokens, tokensDataParsed);
 
 			sinon.assert.calledOnceWithExactly(global.fetch, 'https://id.janis.in/api/oauth/2.0/token', {
 				method: 'POST',
@@ -120,7 +120,7 @@ describe('Auth', () => {
 			const auth = new Auth(validConfig);
 			const tokens = await auth.refreshTokens('the-refresh-token', 'https://example.com/token');
 
-			assert.deepEqual(tokens, tokensData);
+			assert.deepEqual(tokens, tokensDataParsed);
 
 			sinon.assert.calledOnceWithExactly(global.fetch, 'https://example.com/token', {
 				method: 'POST',
