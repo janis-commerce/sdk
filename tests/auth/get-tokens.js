@@ -150,5 +150,71 @@ describe('Auth', () => {
 			sinon.assert.calledOnceWithExactly(json);
 		});
 
+		it('Should work without a codeVerifier if it is not provided', async () => {
+
+			const json = sinon.fake.resolves({ ...tokensData });
+
+			global.fetch.resolves({
+				status: 200,
+				json
+			});
+
+			const auth = new Auth(validConfig);
+			const tokens = await auth.getTokens(deleteProp(authorizationData, 'codeVerifier'), 'https://example.com/token');
+
+			assert.deepEqual(tokens, tokensDataParsed);
+
+			sinon.assert.calledOnceWithExactly(global.fetch, 'https://example.com/token', {
+				method: 'POST',
+				// eslint-disable-next-line max-len
+				body: 'client_id=6da51295-bc34-4ac8-baad-7cf634ea7137&client_secret=3ce6c5ec780528e9ee720e65b08d4ae8537a4d59c1ac151124d017a79c9bc754&grant_type=authorization_code&code=qwerty',
+				headers: {
+					'content-type': 'application/x-www-form-urlencoded'
+				}
+			});
+
+			sinon.assert.calledOnce(global.fetch);
+			sinon.assert.calledOnceWithExactly(json);
+		});
+
+		it('Should not return the idToken and refreshToken if they are not returned from the Authorization server', async () => {
+
+			const {
+				id_token: _,
+				refresh_token: __,
+				...limitedTokensData
+			} = tokensData;
+
+			const {
+				idToken,
+				refreshToken,
+				...limitedTokensDataParsed
+			} = tokensDataParsed;
+
+			const json = sinon.fake.resolves({ ...limitedTokensData });
+
+			global.fetch.resolves({
+				status: 200,
+				json
+			});
+
+			const auth = new Auth(validConfig);
+			const tokens = await auth.getTokens(deleteProp(authorizationData, 'codeVerifier'), 'https://example.com/token');
+
+			assert.deepEqual(tokens, limitedTokensDataParsed);
+
+			sinon.assert.calledOnceWithExactly(global.fetch, 'https://example.com/token', {
+				method: 'POST',
+				// eslint-disable-next-line max-len
+				body: 'client_id=6da51295-bc34-4ac8-baad-7cf634ea7137&client_secret=3ce6c5ec780528e9ee720e65b08d4ae8537a4d59c1ac151124d017a79c9bc754&grant_type=authorization_code&code=qwerty',
+				headers: {
+					'content-type': 'application/x-www-form-urlencoded'
+				}
+			});
+
+			sinon.assert.calledOnce(global.fetch);
+			sinon.assert.calledOnceWithExactly(json);
+		});
+
 	});
 });
