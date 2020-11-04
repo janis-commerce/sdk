@@ -11,7 +11,7 @@ describe('PKCE', () => {
 	describe('generateChallenge()', () => {
 
 		const challengeExample = {
-			codeChallengeMethod: 'R256',
+			codeChallengeMethod: 'S256',
 			codeChallenge: 'k9bqNNyyGHYWCSZb7pcCvA10zw3V8A_dsU_G3vxUm2Y',
 			codeVerifier: 'af4920ff9a8f23c28ef0782c58422cf0583917206290a3ebba4d1fb8d1019a1c2c3a6f9a18f873b3c0785e18068e0e4118d9caaf007780d88e0ce9029e059217'
 		};
