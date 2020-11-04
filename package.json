@@ -1,6 +1,6 @@
 {
   "name": "@janiscommerce/sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An SDK to interact with Janis easily",
   "main": "lib/index.js",
   "scripts": {
