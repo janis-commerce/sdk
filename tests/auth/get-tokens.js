@@ -123,6 +123,33 @@ describe('Auth', () => {
 			sinon.assert.calledOnceWithExactly(json);
 		});
 
+		it('Should not send the client_secret if it is not provided', async () => {
+
+			const json = sinon.fake.resolves({ ...tokensData });
+
+			global.fetch.resolves({
+				status: 200,
+				json
+			});
+
+			const auth = new Auth(deleteProp(validConfig, 'client_secret'));
+			const tokens = await auth.getTokens(authorizationData);
+
+			assert.deepEqual(tokens, tokensDataParsed);
+
+			sinon.assert.calledOnceWithExactly(global.fetch, 'https://id.janis.in/api/oauth/2.0/token', {
+				method: 'POST',
+				// eslint-disable-next-line max-len
+				body: 'client_id=6da51295-bc34-4ac8-baad-7cf634ea7137&grant_type=authorization_code&code=qwerty&code_verifier=foo',
+				headers: {
+					'content-type': 'application/x-www-form-urlencoded'
+				}
+			});
+
+			sinon.assert.calledOnce(global.fetch);
+			sinon.assert.calledOnceWithExactly(json);
+		});
+
 		it('Should use a custom token url if it is provided', async () => {
 
 			const json = sinon.fake.resolves({ ...tokensData });
