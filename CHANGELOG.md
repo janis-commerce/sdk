@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.1.3] - 2020-12-01
+### Fixed
+- PKCE challenge is now properly generated
+- PKCE.generateChallenge() is no longer an async operation
+
 ## [0.1.2] - 2020-11-04
 ### Fixed
 - Now client_secret is not sent with an empty value when not provided. It simply is not sent any more.
